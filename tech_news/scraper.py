@@ -1,7 +1,10 @@
+import requests
+
+
 # Requisito 1
 def fetch(url):
-    """Seu código deve vir aqui"""
-    raise NotImplementedError
+    request = requests.get(url)
+    return request.text
 
 
 # Requisito 2
