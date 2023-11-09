@@ -26,7 +26,7 @@ def scrape_updates(html_content):
     selector = Selector(text=html_content) or None
     if selector is None:
         return []
-    links = selector.css('article a::attr(href)').getall()
+    links = selector.css('#content article a::attr(href)').getall()
     if links == []:
         return links
     for link in links:
@@ -34,7 +34,6 @@ def scrape_updates(html_content):
         if 'author' in link:
             links.pop(index)
     links = list(dict.fromkeys(links))
-    links.pop(0)
 
     return links
 
