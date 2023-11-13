@@ -1,6 +1,7 @@
 from parsel import Selector
 import requests
 import time
+from bs4 import BeautifulSoup
 
 
 # Requisito 1
@@ -63,11 +64,9 @@ def scrape_news(html_content):
     reading_time = selector.css('li.meta-reading-time::text').get()
     reading_time = int(reading_time.split(' ')[0])
     data['reading_time'] = reading_time
-    summary = selector.css('div.entry-content p:first-of-type')
-    new_summary = summary.css('*::text').getall()
-    new_summary = ''.join(new_summary)
-    new_summary = new_summary.strip()
-    data['summary'] = new_summary
+    summary_data = selector.css('div.entry-content p').get()
+    summary = BeautifulSoup(summary_data, 'html.parser')
+    data['summary'] = summary.get_text().strip()
     data['category'] = selector.css('span.label::text').get()
 
     return data
